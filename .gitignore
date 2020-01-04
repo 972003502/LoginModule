@@ -13,7 +13,7 @@
 
 # dependencies
 **/node_modules/
-!/node_modules/canvas
+!*/node_modules/canvas
 
 # profiling files
 chrome-profiler-events*.json
