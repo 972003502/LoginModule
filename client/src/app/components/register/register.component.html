@@ -1,0 +1,148 @@
+<div class="page">
+  <div id="title">
+    <h1>{{title}}</h1>
+  </div>
+
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" autocomplete="off">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback nzValidatingTip="" [nzErrorTip]="errorTplOfEmail">
+        <input nz-input formControlName="email" id="email" />
+        <ng-template #errorTplOfEmail let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Please input your E-mail!
+          </ng-container>
+          <ng-container *ngIf="control.hasError('email')">
+            The input is not valid E-mail!
+          </ng-container>
+          <ng-container *ngIf="control.hasError('hasUser')">
+            The E-mail is already registered!
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>Password</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback [nzErrorTip]="errorTplOfPassword">
+        <input nz-input type="password" id="password" formControlName="password"
+          (ngModelChange)="updateConfirmValidator()" autocomplete="new-password" />
+        <ng-template #errorTplOfPassword let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Please input your password!
+          </ng-container>
+          <ng-container *ngIf="control.hasError('minlength') && control.touched">
+            The password should be between 8 and 15 digits!
+          </ng-container>
+          <ng-container *ngIf="control.hasError('maxlength') && control.touched">
+            The password should be between 8 and 15 digits!
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired>Confirm Password</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback [nzErrorTip]="errorTplOfCheckPassword">
+        <input nz-input type="password" formControlName="checkPassword" id="checkPassword" />
+        <ng-template #errorTplOfCheckPassword let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Please confirm your password!
+          </ng-container>
+          <ng-container *ngIf="control.hasError('confirm')">
+            Two passwords that you enter is inconsistent!
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nickname" nzRequired>
+        <span>
+          Nickname
+          <i nz-icon nz-tooltip nzTitle="What do you want other to call you" nzType="question-circle"
+            nzTheme="outline"></i>
+        </span>
+      </nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback nzErrorTip="Please input your nickname!">
+        <input nz-input id="nickname" formControlName="nickname" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phoneNumber" nzRequired>Phone Number</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback [nzValidateStatus]="validateForm.controls['phoneNumber']"
+        [nzErrorTip]="errorTplOfPhoneNumber">
+        <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+          <ng-template #addOnBeforeTemplate>
+            <nz-select formControlName="phoneNumberPrefix" class="phone-select">
+              <nz-option nzLabel="+86" nzValue="+86"></nz-option>
+              <nz-option nzLabel="+87" nzValue="+87"></nz-option>
+            </nz-select>
+          </ng-template>
+          <input formControlName="phoneNumber" id="'phoneNumber'" nz-input />
+        </nz-input-group>
+        <ng-template #errorTplOfPhoneNumber let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Please input your phone number!
+          </ng-container>
+          <ng-container *ngIf="control.hasError('minlength') && control.touched">
+            Not a valid phone number!
+          </ng-container>
+          <ng-container *ngIf="control.hasError('maxlength') && control.touched">
+            Not a valid phone number!
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="register-area">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="emailCaptcha" nzRequired>Captcha</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTplOfCaptcha"
+        nzExtra="We must make sure that your are a human.">
+        <div nz-row [nzGutter]="10">
+          <div nz-col [nzSpan]="16">
+            <input nz-input formControlName="emailCaptcha" id="emailCaptcha" />
+            <ng-template #errorTplOfCaptcha let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                Please input the captcha you got!
+              </ng-container>
+              <ng-container *ngIf="control.hasError('captchaError')">
+                Captcha is error!
+              </ng-container>
+            </ng-template>
+          </div>
+          <div nz-col [nzSpan]="8">
+            <button nzType="primary" style="width: 100%;" nz-button (click)="getCaptcha($event)"
+              [disabled]="isGettingCaptcha || !validateForm.controls.email.valid">{{ getCaptchaBtnStr }}</button>
+          </div>
+        </div>
+        <nz-alert *ngIf="notify !== ''" nzType="info" [nzMessage]="notify" nzShowIcon nzCloseable></nz-alert>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-row class="register-area">
+      <div nz-col [nzSpan]="6"></div>
+      <nz-form-control [nzSpan]="14">
+        <label nz-checkbox formControlName="agree">
+          <span>I have read the <a (click)="showAgreementModal($event)">agreement</a></span>
+          <nz-modal style="text-align:center" nzWidth="1000" [(nzVisible)]="isAgreementVisible"
+            nzTitle="This is an agreement" (nzOnCancel)="isDisagree()" nzClosable="false" nzMaskClosable="false"
+            nzKeyboard="false">
+            <iframe name="agreement" width="100%" height="600px" frameborder="0" [src]="agreementTrustedUrl"></iframe>
+            <div *nzModalFooter class="ModalFooter">
+              <button nz-button nzType="danger" (click)="isDisagree()">Disagree</button>
+              <button nz-button nzType="primary" (click)="isAgree()">Agree</button>
+            </div>
+          </nz-modal>
+        </label>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-row class="register-area">
+      <div nz-col [nzSpan]="6"></div>
+      <nz-form-control [nzSpan]="14">
+        <button class="register-form-button" nz-button nzType="primary" [disabled]="!validateForm.valid"
+          [nzLoading]="isSubmitting">
+          Register
+        </button>
+        Use existing account,
+        <a routerLink="/login">Login now!</a>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

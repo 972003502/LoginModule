@@ -1,0 +1,32 @@
+{
+  "name": "loginservice",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "canvas": "^2.6.0",
+    "clean-css": "^4.2.1",
+    "connect-history-api-fallback": "^1.6.0",
+    "connect-multiparty": "^2.2.0",
+    "constantinople": "^4.0.1",
+    "cookie-parser": "~1.4.4",
+    "crypto-js": "^3.1.9-1",
+    "csprng": "^0.1.2",
+    "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
+    "express": "~4.16.1",
+    "express-formidable": "^1.2.0",
+    "express-jwt": "^5.3.1",
+    "express-winston": "^4.0.2",
+    "http-errors": "~1.6.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.7.7",
+    "morgan": "~1.9.1",
+    "multiparty": "^4.2.1",
+    "nodemailer": "^6.4.1",
+    "package-name": "^0.1.0",
+    "winston": "^3.2.1"
+  }
+}

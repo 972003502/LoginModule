@@ -1,0 +1,42 @@
+.page {
+  width: 100%;
+  height: 100%;
+  min-width: 1000px;
+}
+
+[nz-form] {
+  max-width: 600px;
+  margin: auto;
+}
+
+.phone-select {
+  width: 70px;
+}
+
+.register-area {
+  margin-bottom: 0;
+}
+
+.register-form-button {
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+  font-size: 40px;
+  color: rgb(41, 170, 245);
+}
+
+#title {
+  padding: 50px;
+}
+
+
+.ModalFooter {
+  text-align:center;
+}
+
+.ModalFooter button {
+  width: 90px;
+  margin: auto 10px;
+}

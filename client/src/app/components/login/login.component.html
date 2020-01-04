@@ -1,0 +1,76 @@
+<div id="title">
+  <h1>{{title}}</h1>
+</div>
+
+<form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()" autocomplete="on">
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="errorTplOfEmail">
+      <nz-input-group nzPrefixIcon="user">
+        <input type="text" nz-input formControlName="email" placeholder="E-mail" />
+        <ng-template #errorTplOfEmail let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Please input your E-mail!
+          </ng-container>
+          <ng-container *ngIf="control.hasError('email')">
+            The input is not valid E-mail!
+          </ng-container>
+          <ng-container *ngIf="control.hasError('loginFailed')"></ng-container>
+        </ng-template>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="errorTplOfPassword">
+      <nz-input-group nzPrefixIcon="lock" [nzSuffix]="suffixTemplate">
+        <input [type]="passwordVisible ? 'text' : 'password'" nz-input formControlName="password" placeholder="Password"
+          (ngModelChange)="updateEmailValidator()" />
+        <ng-template #errorTplOfPassword let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Please input your password!
+          </ng-container>
+          <ng-container *ngIf="control.hasError('loginFailed')">
+            No such user or wrong password!
+          </ng-container>
+        </ng-template>
+      </nz-input-group>
+      <ng-template #suffixTemplate>
+        <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+          (click)="passwordVisible = !passwordVisible"></i>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item style="margin-bottom: 0;">
+    <nz-form-control [nzErrorTip]="errorTplOfCaptcha">
+      <div nz-row [nzGutter]="10">
+        <div nz-col [nzSpan]="16">
+          <input nz-input type="text" formControlName="captcha" id="captcha" placeholder="Captcha" />
+          <ng-template #errorTplOfCaptcha let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              Please input the captcha you got!
+            </ng-container>
+            <ng-container *ngIf="control.hasError('captchaError')">
+              Captcha is error!
+            </ng-container>
+          </ng-template>
+        </div>
+        <div style="margin-top: -2px;" nz-col [nzSpan]="7">
+          <img class="captchaPic" alt="Captcha" [src]="captchaArgs.imgSrc" (click)="updateCaptcha($event)">
+        </div>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control>
+      <label nz-checkbox formControlName="remember">
+        <span>Remember me</span>
+      </label>
+      <a class="login-form-forgot" routerLink="/resetPassword">Forgot password</a>
+      <button nz-button class="login-form-button" [nzLoading]="isLoggingIn" [nzType]="'primary'">Log in</button>
+      Or
+      <a routerLink="/register">register now!</a>
+    </nz-form-control>
+  </nz-form-item>
+</form>
