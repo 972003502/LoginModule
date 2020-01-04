@@ -18,6 +18,7 @@ export class ResetPasswordComponent implements OnInit {
     private token: TokenService
   ) { }
 
+  title = 'Reset Password';
   setpOneValidateForm: FormGroup;
   setpTwoValidateForm: FormGroup;
   resetPosswordInfo: ResetPosswordInfo;

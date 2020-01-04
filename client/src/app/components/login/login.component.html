@@ -1,4 +1,4 @@
-<div id="title">
+<div class="title">
   <h1>{{title}}</h1>
 </div>
 
@@ -41,19 +41,21 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item style="margin-bottom: 0;">
+  <nz-form-item style="margin-bottom: 0px;">
     <nz-form-control [nzErrorTip]="errorTplOfCaptcha">
       <div nz-row [nzGutter]="10">
         <div nz-col [nzSpan]="16">
-          <input nz-input type="text" formControlName="captcha" id="captcha" placeholder="Captcha" />
-          <ng-template #errorTplOfCaptcha let-control>
-            <ng-container *ngIf="control.hasError('required')">
-              Please input the captcha you got!
-            </ng-container>
-            <ng-container *ngIf="control.hasError('captchaError')">
-              Captcha is error!
-            </ng-container>
-          </ng-template>
+          <nz-input-group nzPrefixIcon="safety">
+            <input nz-input type="text" formControlName="captcha" id="captcha" placeholder="Captcha" />
+            <ng-template #errorTplOfCaptcha let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                Please input the captcha you got!
+              </ng-container>
+              <ng-container *ngIf="control.hasError('captchaError')">
+                Captcha is error!
+              </ng-container>
+            </ng-template>
+          </nz-input-group>
         </div>
         <div style="margin-top: -2px;" nz-col [nzSpan]="7">
           <img class="captchaPic" alt="Captcha" [src]="captchaArgs.imgSrc" (click)="updateCaptcha($event)">
@@ -68,7 +70,8 @@
         <span>Remember me</span>
       </label>
       <a class="login-form-forgot" routerLink="/resetPassword">Forgot password</a>
-      <button nz-button class="login-form-button" [nzLoading]="isLoggingIn" [nzType]="'primary'">Log in</button>
+      <button nz-button class="login-form-button" [nzLoading]="isLoggingIn" [nzType]="'primary'"
+        [disabled]="!validateForm.valid">Log in</button>
       Or
       <a routerLink="/register">register now!</a>
     </nz-form-control>
