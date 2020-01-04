@@ -6,7 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "canvas": "^2.6.0",
+    "canvas": "^2.6.1",
     "clean-css": "^4.2.1",
     "connect-history-api-fallback": "^1.6.0",
     "connect-multiparty": "^2.2.0",
